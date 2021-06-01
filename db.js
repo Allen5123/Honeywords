@@ -47,8 +47,20 @@ async function QueryPara(queryString, value, functionPointer) {
 
     return await AuxQuery(queryString).then(functionPointer).catch((error) => {throw error;});
 }
+const query = async (sql, params) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) reject(new Error(err));
+            connection.query(sql, params, (err, result) => {
+                connection.release();
+                if (err) reject(new Error(err));
+                resolve(result);
+            });
+        });
+    });
+};
 
-async function BuildTable() {
+let BuildTable = async () => {
     let createTableQuery = (numOfHw_) => {
         let userQuery = 'CREATE TABLE IF NOT EXISTS user (username VARCHAR(20),password VARCHAR(30)';
         let shadowQuery = 'CREATE TABLE IF NOT EXISTS shadow (username VARCHAR(20)';
@@ -66,16 +78,17 @@ async function BuildTable() {
 
     const {userQuery, shadowQuery, honeyCheckerQuery} = createTableQuery(numOfHw);
     try {
-        await Query(userQuery, (retval)=>{console.log('After Create user Table')});
-        await Query(shadowQuery, (retval)=>{console.log('After Create shadow Table')});
-        await Query(honeyCheckerQuery, (retval)=>{console.log('After Create honeyChecker Table')});
+        await query(userQuery, []);
+        await query(shadowQuery, []);
+        await query(honeyCheckerQuery, []);
+        console.log('SetUp successfully!');
     }
     catch (error) {
         throw error;
     }
 }
 
-async function InsertUser(username, psList, realHashPw) {
+let InsertUser = async (username, psList, realHashPw) => {
     let qry = 'INSERT INTO user VALUES(?';
     if (psList.length !== numOfHw + 1) {
         throw 'Insert into user error';
@@ -86,9 +99,7 @@ async function InsertUser(username, psList, realHashPw) {
         }
         qry+=');';
         try {
-            await QueryPara(qry, [username].concat(psList, [realHashPw]), (retval) => {
-                console.log('After insert into User');
-            });
+            await query(qry, [username].concat(psList, [realHashPw]));
         }
         catch (error) {
             throw error;
@@ -96,7 +107,7 @@ async function InsertUser(username, psList, realHashPw) {
     }
 }
 
-async function InsertShadow(username, hashList) {
+ let InsertShadow = async (username, hashList) =>{
     let qry = 'INSERT INTO shadow VALUES(?';
     if (hashList.length !== numOfHw + 1) {
         throw 'Insert into shadow error';
@@ -107,9 +118,7 @@ async function InsertShadow(username, hashList) {
         }
         qry+=');';
         try {
-            await QueryPara(qry, [username].concat(hashList), (retval) => {
-                console.log('After insert into shadow');
-            });
+           await query(qry, [username].concat(hashList));
         }
         catch (error) {
             throw error;
@@ -117,29 +126,33 @@ async function InsertShadow(username, hashList) {
     }
 }
 
-async function InsertHoneyChecker(username, position) {
+let InsertHoneyChecker = async (username, position) => {
     let qryStr = 'INSERT INTO honeychecker VALUES(?,?);';
     try {
-        await QueryPara(qryStr, [username, position.toString()], (retval) => {
-            console.log('After insert into honeychecker');
-        });
+       await auery(qryStr, [username, position.toString()]);
     }
     catch (error) {
         throw error;
     }
 }
-
-pool.getConnection((err, connection) => {
-    console.log('Test Databse connection...');
-    if (err) {
-        consloe.log(err);
-        throw err;
+let SetUp = async () => {
+    try {
+        pool.getConnection((err, connection) => {
+            console.log('Test Databse connection...');
+            if (err) {
+                throw err;
+            }
+            else {
+                console.log('Database Connect Successfully!');
+                connection.release();
+            }
+        });
+        await BuildTable();
+    } 
+    catch (err) {
+        if (err) {console.log('SetUp Error\n', err);} else {console.log(res);}
     }
-    else {
-        console.log('Database Connect Successfully!');
-        connection.release();
-    }
-});
-BuildTable();
+}
+SetUp();
 
-module.exports = {pool:pool, Query:Query, QueryPara:QueryPara, BuildTable:BuildTable, numOfHw:numOfHw, InsertUser:InsertUser, InsertShadow:InsertShadow, InsertHoneyChecker:InsertHoneyChecker};
+module.exports = {pool:pool, query:query, Query:Query, QueryPara:QueryPara, BuildTable:BuildTable, numOfHw:numOfHw, InsertUser:InsertUser, InsertShadow:InsertShadow, InsertHoneyChecker:InsertHoneyChecker};
