@@ -77,7 +77,7 @@ router.post('/login', async (req, res, next) => {
         try {
             let res = await db.query(qryStr, [username]);
             if (res !== undefined && res.length > 0) {return res;}
-            else {throw 'User not\'t exist';}
+            else {throw username + ' don\'t exist';}
         }
         catch (error) {
            throw error;

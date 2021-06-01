@@ -8,45 +8,8 @@ var pool = mysql.createPool({
     password: DB_PASSWORD,
     database: DB_DATABASE
 });
-const numOfHw = 2;
+const numOfHw = 3;
 
-async function Query(queryString, functionPointer) {
-    let AuxQuery = (queryString) => {
-        return new Promise((resolve, reject) => {
-            pool.getConnection((err, connection) => {
-                if (err) {reject(err);}
-                else {
-                    connection.query(queryString, (error, results, field) => {
-                        if (error) {reject(error);}
-                        else {resolve({results:results, field:field});}
-                        connection.release();
-                    });
-                }
-            });
-        });
-    };
-
-    return await AuxQuery(queryString).then(functionPointer).catch((error) => {throw error;});
-}
-
-async function QueryPara(queryString, value, functionPointer) {
-    let AuxQuery = (queryString) => {
-        return new Promise((resolve, reject) => {
-            pool.getConnection((err, connection) => {
-                if (err) {reject(err);}
-                else {
-                    connection.query(queryString, value, (error, results, field) => {
-                        if (error) {reject(error);}
-                        else {resolve({results:results, field:field});}
-                        connection.release();
-                    });
-                }
-            });
-        });
-    };
-
-    return await AuxQuery(queryString).then(functionPointer).catch((error) => {throw error;});
-}
 const query = async (sql, params) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -158,4 +121,4 @@ let SetUp = async () => {
 
 SetUp();
 
-module.exports = {pool:pool, query:query, Query:Query, QueryPara:QueryPara, BuildTable:BuildTable, numOfHw:numOfHw, InsertUser:InsertUser, InsertShadow:InsertShadow, InsertHoneyChecker:InsertHoneyChecker};
+module.exports = {pool:pool, query:query, BuildTable:BuildTable, numOfHw:numOfHw, InsertUser:InsertUser, InsertShadow:InsertShadow, InsertHoneyChecker:InsertHoneyChecker};
