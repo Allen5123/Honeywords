@@ -37,12 +37,14 @@ exports.HoneySet = async (username, position) => {
 
 exports.HoneyCheck = async (username, position) => {
     let AuxHoneyCheck = async (username, position) => {
-        let ret = '';
         let qryStr = 'SELECT position FROM honeychecker WHERE username=?;';
-        await db.QueryPara(qryStr, [username], (retval) => {
-            ret = (retval.results[0]['position'] === position)? 'VALID' : 'ATTACK';
-        });
-        return ret;
+        try {
+            let res = await db.query(qryStr, [username]);
+            return (res[0]['position'] === position)? 'VALID' : 'ATTACK';
+        }
+        catch (err) {
+            throw err;
+        }
     }
 
     let ret = 'TYPO';

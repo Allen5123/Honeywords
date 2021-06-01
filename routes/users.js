@@ -17,7 +17,7 @@ router.get('/show', async (req, res, next) => {
 	let SelectAll = async (tableName) => {
 		const data = await db.QueryPara('SELECT * FROM ?;', [mysql.raw(tableName)], (retval) => {
 			if (retval !== undefined && retval.results.length > 0) {return retval.results;}
-			else {throw 'SELECT'+ tableName +'ERROR';}
+			else {throw 'SELECT '+ tableName +' ERROR';}
 		});
 		return data;
 	}

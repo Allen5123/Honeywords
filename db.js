@@ -129,16 +129,17 @@ let InsertUser = async (username, psList, realHashPw) => {
 let InsertHoneyChecker = async (username, position) => {
     let qryStr = 'INSERT INTO honeychecker VALUES(?,?);';
     try {
-       await auery(qryStr, [username, position.toString()]);
+       await query(qryStr, [username, position.toString()]);
     }
     catch (error) {
         throw error;
     }
 }
+
 let SetUp = async () => {
     try {
         pool.getConnection((err, connection) => {
-            console.log('Test Databse connection...');
+            console.log('Test Database connection...');
             if (err) {
                 throw err;
             }
@@ -150,9 +151,11 @@ let SetUp = async () => {
         await BuildTable();
     } 
     catch (err) {
-        if (err) {console.log('SetUp Error\n', err);} else {console.log(res);}
+        if (err) {console.log('SetUp Error\n', err);}
+        else {console.log(res);}
     }
 }
+
 SetUp();
 
 module.exports = {pool:pool, query:query, Query:Query, QueryPara:QueryPara, BuildTable:BuildTable, numOfHw:numOfHw, InsertUser:InsertUser, InsertShadow:InsertShadow, InsertHoneyChecker:InsertHoneyChecker};

@@ -10,11 +10,15 @@ const JWTSK = 'zvoafnvonzvklsaxlemfeqfm';
 router.post('/signup', async (req, res, next) => {
     let FindUser = async (username) => {
         let qryStr = 'SELECT * FROM user WHERE username=?;';
-        await db.QueryPara(qryStr, [username], (retval) => {
-            if (retval.results !== undefined && retval.results.length > 0) {
+        try {
+            let res = await db.query(qryStr, [username]);
+            if (res !== undefined && res.length > 0) {
                 throw username + ' has been used';
             }
-        });
+        } 
+        catch (error) {
+            throw error;
+        }
     }
 
     let HashPassword = async (psList) => {
@@ -67,13 +71,17 @@ router.post('/login', async (req, res, next) => {
     let FindHashList = async (username) => {
         let qryStr = 'SELECT hashpw1';
         for (let i = 2; i <= db.numOfHw + 1; ++i) {
-            qryStr+=(',hashpw'+i.toString());
+            qryStr+=(',hashpw' + i.toString());
         }
-        qryStr+=' from shadow WHERE username=?;';
-        return await db.QueryPara(qryStr, [username], (retval) => {
-            if (retval.results !== undefined && retval.results.length > 0) {return retval;}
+        qryStr+=' FROM shadow WHERE username=?;';
+        try {
+            let res = await db.query(qryStr, [username]);
+            if (res !== undefined && res.length > 0) {return res;}
             else {throw 'User not\'t exist';}
-        });
+        }
+        catch (error) {
+           throw error;
+        }
     }
 
     const {username, password} = req.body;
@@ -90,7 +98,7 @@ router.post('/login', async (req, res, next) => {
         //find password's position in shadow
         for (let i = 1; i <= db.numOfHw + 1; ++i) {
             let key = 'hashpw' + i.toString();
-            if (await bcrypt.compare(password, hashList.results[0][key])) {
+            if (await bcrypt.compare(password, hashList[0][key])) {
                 position = i;
                 break;
             }
