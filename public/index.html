@@ -39,6 +39,7 @@
                 switch (result.status) {
                     case'VALID':
                         localStorage.setItem('token', result.data);
+                        localStorage.setItem('name', username);
                         window.location.href = '/users/user';
                         break;
                     case'ATTACK':

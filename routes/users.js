@@ -11,7 +11,8 @@ router.get('/attacker', function(req, res, next) {
 	res.send('<h1 style="color:Tomato;">You are attacker !!!</h1>');
 });
 router.get('/user', function(req, res, next) {
-	res.send('<h1 style="color:green;">Login Successfully !!!</h1>');
+	//res.send('<h1 style="color:green;">Login Successfully !!!</h1>');
+	res.sendFile('userinfo.html', {root:path.join(__dirname, '../public')});
 });
 router.get('/show', async (req, res, next) => {
 	let SelectAll = async (tableName) => {
