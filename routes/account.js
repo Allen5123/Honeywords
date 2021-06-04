@@ -121,4 +121,7 @@ router.post('/login', async (req, res, next) => {
     }
 });
 
+router.post('/chgpw', async (req, res, next) => {
+    return res.json({status:'ok'});
+})
 module.exports = router;

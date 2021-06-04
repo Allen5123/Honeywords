@@ -3,16 +3,59 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            html, body {
+                height: 100%;
+            }
+            .Head {
+                background-color: slateblue;
+                font-size: larger;
+                text-align: center;
+                height: 20%;
+            }
+            .Head h1 {
+                position: relative;
+                top:25%;
+                margin: 0;
+            }
+            .Side {
+                float: left;
+                width: 150px;
+                height: 100%;
+                background-color: #ccc;
+                margin-right: 1rem;
+            }
+            .Side nav a {
+                color: rgb(221, 85, 85);
+                font-weight: 1000;
+                text-decoration:none;
+                display: block;
+                padding:1rem 0rem 1rem 1rem;
+            }
+            .Side nav a:hover {
+                background-color: rgb(99, 97, 97);
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello </h1>
-        <button id="logout"><strong>logout</strong></button>
-        <h2>Change Password</h2>
-        <form id="indexform">
-            <label for="pw">NewPassword : </label>
-            <input id="pw" name="password" type="text" minlength="6" maxlength="20" required>
-            <input type="submit" id="chgpw" value="submit">
-        </form>
+        <div class="Head">
+            <h1>Hello </h1>
+        </div>
+        <div class="Side">
+            <nav>
+                <a href="/">Main page</a>
+                <a href="/users/">Admit page</a>
+                <a class="logout">Logout</a>
+            </nav>
+        </div>
+        <div class="Body">
+            <h2>Change Password</h2>
+            <form id="form">
+                <label for="pw">NewPassword : </label>
+                <input id="pw" name="password" type="text" minlength="6" maxlength="20" required>
+                <input type="submit" id="chgpw" value="submit">
+            </form>
+        </div>
         <script src="/javascripts/userinfo.js"></script>
     </body>
 </html>

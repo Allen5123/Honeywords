@@ -7,8 +7,31 @@ else {
     window.location.href = '/';
 }
 let Logout = (event) => {
+    event.preventDefault();
     localStorage.removeItem('name');
     localStorage.removeItem('token');
-    window.location.reload();
+    window.location.href = '/';
 }
-document.querySelector('#logout').addEventListener('click', Logout);
+const logout = document.querySelectorAll('.logout');
+logout.forEach(element => {
+    element.addEventListener('click', Logout);
+});
+let ChangePassword = async (event) => {
+    event.preventDefault();
+    const newpassword = document.getElementById('pw').value;
+    const chgpwURL = '../account/chgpw';
+    console.log(newpassword);
+    const result = await fetch(chgpwURL, {
+        method: 'POST',
+        redirect : 'follow',
+        headers : {
+            'content-type' :　'application/json'
+        },
+        body : JSON.stringify({
+            username,
+            newpassword
+        })
+    }).then((res)=>{return res.json();});
+    console.log(result);
+}
+document.getElementById('form').addEventListener('submit', ChangePassword);
