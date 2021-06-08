@@ -1,24 +1,27 @@
 var db = require('./db');
-const tail = 3;
 
 exports.ChaffByTailTweak = (password, n) => {
+    const tail = 3, specialCharList = ['~', '!', '#', '$', '%', '&', '*', '+', '-', '@'];
     let pslist = [];
     for (let i = 0; i < n; ++i) {
-        let hw = password.substring(0, password.length-tail);
+        let hw = password.substring(0, password.length - tail);
         for (let j = 0; j < tail; ++j) {
-            let randNum = Math.floor(Math.random()*1000);
-            let c = '\0';
-            switch (randNum % 3) {
-                case 0: //Uppercase
-                    c = String.fromCharCode((Math.floor((Math.random()*100))%26) + 65);
-                    break;
-                case 1: //lowercase
-                    c = String.fromCharCode((Math.floor((Math.random()*100))%26) + 97);
-                    break;
-                case 2: //number
-                    c = (Math.floor((Math.random()*100))%10).toString();
-                    break;
-            };
+            let randomNum = 0, c = '\0';
+            if ((/[a-z]/).test(password[password.length-j-1])) {
+                randomNum = Math.floor((Math.random()*26))%26;
+                c = String.fromCharCode(randomNum + 97);
+            }
+            else if ((/[A-Z]/).test(password[password.length-j-1])) {
+                randomNum = Math.floor((Math.random()*26))%26;
+                c = String.fromCharCode(randomNum + 65);
+            }
+            else if ((/[0-9]/).test(password[password.length-j-1])) {
+                randomNum = Math.floor((Math.random()*10))%10;
+                c = String.fromCharCode(randomNum + 48);
+            }
+            else {
+                c = specialCharList[Math.floor((Math.random()*specialCharList.length))%specialCharList.length];
+            }
             hw+=c;
         }
         pslist.push(hw);
