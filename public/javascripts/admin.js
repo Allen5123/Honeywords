@@ -5,7 +5,7 @@ let InsertTable = async () => {
     //console.log('result', result);
     if (result.status === 'ok') {
         const numOfHw = Object.keys((result.userData)[0]).length - 3;
-        let BulidTableHead = () => {
+        let BulidTableHead = async () => {
             let userHead = document.getElementById('userhead');
             let shadowHead = document.getElementById('shadowhead');
             let usertr = userHead.getElementsByTagName('tr');

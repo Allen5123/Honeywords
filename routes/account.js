@@ -70,12 +70,10 @@ router.post('/login', async (req, res, next) => {
             qryStr+=(',hashpw'+i.toString());
         }
         qryStr+=' from shadow WHERE username=?;';
-        //let ret = undefined;
         return await db.QueryPara(qryStr, [username], (retval) => {
             if (retval.results !== undefined && retval.results.length > 0) {return retval;}
             else {throw 'User not\'t exist';}
         });
-        //return ret;
     }
 
     const {username, password} = req.body;

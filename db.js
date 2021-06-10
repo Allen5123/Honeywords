@@ -1,24 +1,24 @@
 var mysql = require('mysql');
-var dbName = 'honeywords';
-var dbInfo = {host:'localhost', database:dbName, user:'root', password:'samtucuers12', connectionLimit : 10};
-var pool = mysql.createPool(dbInfo);
+require('dotenv').config();
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE} = process.env;
+var pool = mysql.createPool({
+    connectionLimit: 10,
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_DATABASE
+});
 const numOfHw = 2;
 
 async function Query(queryString, functionPointer) {
     let AuxQuery = (queryString) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
-                if (err) {
-                    reject(err);
-                }
+                if (err) {reject(err);}
                 else {
                     connection.query(queryString, (error, results, field) => {
-                        if (error) {
-                            reject(error);
-                        }
-                        else {
-                            resolve({results:results, field:field});
-                        }
+                        if (error) {reject(error);}
+                        else {resolve({results:results, field:field});}
                         connection.release();
                     });
                 }
@@ -33,17 +33,11 @@ async function QueryPara(queryString, value, functionPointer) {
     let AuxQuery = (queryString) => {
         return new Promise((resolve, reject) => {
             pool.getConnection((err, connection) => {
-                if (err) {
-                    reject(err);
-                }
+                if (err) {reject(err);}
                 else {
                     connection.query(queryString, value, (error, results, field) => {
-                        if (error) {
-                            reject(error);
-                        }
-                        else {
-                            resolve({results:results, field:field});
-                        }
+                        if (error) {reject(error);}
+                        else {resolve({results:results, field:field});}
                         connection.release();
                     });
                 }
@@ -83,7 +77,7 @@ async function BuildTable() {
 
 async function InsertUser(username, psList, realHashPw) {
     let qry = 'INSERT INTO user VALUES(?';
-    if (psList.length != numOfHw + 1) {
+    if (psList.length !== numOfHw + 1) {
         throw 'Insert into user error';
     }
     else {
@@ -104,7 +98,7 @@ async function InsertUser(username, psList, realHashPw) {
 
 async function InsertShadow(username, hashList) {
     let qry = 'INSERT INTO shadow VALUES(?';
-    if (hashList.length != numOfHw + 1) {
+    if (hashList.length !== numOfHw + 1) {
         throw 'Insert into shadow error';
     }
     else {
@@ -137,7 +131,10 @@ async function InsertHoneyChecker(username, position) {
 
 pool.getConnection((err, connection) => {
     console.log('Test Databse connection...');
-    if (err) {throw err;}
+    if (err) {
+        consloe.log(err);
+        throw err;
+    }
     else {
         console.log('Database Connect Successfully!');
         connection.release();

@@ -11,8 +11,8 @@
             <input id="acc" name="account" type="text" minlength="3" maxlength="20" required><br>
             <label for="pw">Password:</label>
             <input id="pw" name="password" type="text" minlength="6" maxlength="20" required><br>
-            <input type="submit" id="login" value="login">
             <input type="submit" id="signup" value="signup">
+            <input type="submit" id="login" value="login">
         </form>
         <script>
             const signupURL = 'account/signup';
@@ -23,7 +23,7 @@
                 const username = document.getElementById('acc').value;
                 const password = document.getElementById('pw').value;
                 const submitAction = document.activeElement.id;
-                let fetchURL = (submitAction == 'login')? loginURL : signupURL;
+                let fetchURL = (submitAction === 'login')? loginURL : signupURL;
                 const result = await fetch(fetchURL, {
                     method: 'POST',
                     redirect : 'follow',
@@ -35,7 +35,7 @@
                         password
                     })
                 }).then((res) => {return res.json();}).catch((err)=>{console.log(err);});
-                console.log('fetch :', result);
+                //console.log('fetch :', result);
                 switch (result.status) {
                     case'VALID':
                         localStorage.setItem('token', result.data);

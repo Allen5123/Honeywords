@@ -12,7 +12,7 @@ exports.ChaffByTailTweak = (password, n) => {
                 case 0: //Uppercase
                     c = String.fromCharCode((Math.floor((Math.random()*100))%26) + 65);
                     break;
-                case 1: //lowweercase
+                case 1: //lowercase
                     c = String.fromCharCode((Math.floor((Math.random()*100))%26) + 97);
                     break;
                 case 2: //number

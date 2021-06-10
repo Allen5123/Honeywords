@@ -16,12 +16,8 @@ router.get('/user', function(req, res, next) {
 router.get('/show', async (req, res, next) => {
 	let SelectAll = async (tableName) => {
 		const data = await db.QueryPara('SELECT * FROM ?;', [mysql.raw(tableName)], (retval) => {
-			if (retval !== undefined && retval.results.length > 0) {
-				return retval.results;
-			}
-			else {
-				throw 'SELECT'+ tableName +'ERROR';
-			}
+			if (retval !== undefined && retval.results.length > 0) {return retval.results;}
+			else {throw 'SELECT'+ tableName +'ERROR';}
 		});
 		return data;
 	}
@@ -33,7 +29,7 @@ router.get('/show', async (req, res, next) => {
 		return res.json({status:'ok', userData:userData, shadowData:shadowData, honeycheckerData:honeycheckerData});
   	}
 	catch (err) {
-    	console.log(err);
+		console.log(err);
 		return res.json({status:'error'});
 	}
 });
