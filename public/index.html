@@ -19,15 +19,12 @@
             }
             .container {
                 margin: 0 auto;
-                /* padding: 10px 10px 10px 10px; */
                 width : 50%;
                 height: 400px;
                 text-align:center
             }
             #notice {
                 color:Tomato; 
-                /* position: relative; 
-                top: 0.5em; */
                 margin-bottom: 0;
                 font-weight: bolder;
             }
@@ -99,14 +96,6 @@
             }
             form.addEventListener('submit', Enter);
             let InvalidNotice = () => {
-                // if (document.querySelector('#notice') ===  null) {
-                //     const container = document.querySelector('#container');
-                //     const notice = document.createElement('p');
-                //     notice.setAttribute('id', 'notice');
-                //     notice.textContent = 'Invalid username / password';
-                //     notice.style.cssText = 'color:Tomato; position: relative; top: 0.5em;';
-                //     container.appendChild(notice);
-                // }
                 document.querySelector('#notice').style.visibility = 'visible';
             }
         </script>
