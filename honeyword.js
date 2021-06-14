@@ -5,17 +5,17 @@ exports.ChaffByTailTweak = (password, n) => {
     let pslist = [];
     for (let i = 0; i < n; ++i) {
         let hw = password.substring(0, password.length - tail);
-        for (let j = 0; j < tail; ++j) {
+        for (let j = tail; j > 0; --j) {
             let randomNum = 0, c = '\0';
-            if ((/[a-z]/).test(password[password.length-j-1])) {
+            if ((/[a-z]/).test(password[password.length-j])) {
                 randomNum = Math.floor((Math.random()*26))%26;
                 c = String.fromCharCode(randomNum + 97);
             }
-            else if ((/[A-Z]/).test(password[password.length-j-1])) {
+            else if ((/[A-Z]/).test(password[password.length-j])) {
                 randomNum = Math.floor((Math.random()*26))%26;
                 c = String.fromCharCode(randomNum + 65);
             }
-            else if ((/[0-9]/).test(password[password.length-j-1])) {
+            else if ((/[0-9]/).test(password[password.length-j])) {
                 randomNum = Math.floor((Math.random()*10))%10;
                 c = String.fromCharCode(randomNum + 48);
             }

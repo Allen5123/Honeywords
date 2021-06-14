@@ -7,29 +7,61 @@
             #indexform {
                 position: relative;
                 top: 1em;
+                width: 50%;
+                margin: 0 auto;
+                height: 200px;
+                border: 1.5px solid crimson;
+                border-radius: 10px;
+                background-color:ghostwhite;
             }
             #subbtn {
-                position: relative;
-                top: 0.5em;
-                left: 0.1em;
+                margin-top: 14px;
+            }
+            .container {
+                margin: 0 auto;
+                /* padding: 10px 10px 10px 10px; */
+                width : 50%;
+                height: 400px;
+                text-align:center
+            }
+            #notice {
+                color:Tomato; 
+                /* position: relative; 
+                top: 0.5em; */
+                margin-bottom: 0;
+                font-weight: bolder;
+            }
+            #acc, #pw {
+                margin-top: 1rem;
+                height: 30px;
+                width: 70%;
+            }
+            h1 {
+                font-size: 50px;
+            }
+            #signup, #login {
+                font-size: 18px;
+                margin: 0 10px;
             }
         </style>
     </head>
     <body>
-        <h1>HoneyWords</h1>
-        <form id="indexform">
-            <div id="formcontent">
-                <label for="acc">Username:</label><br>
-                <input id="acc" name="account" type="text" minlength="3" maxlength="20" required><br>
-                <label for="pw">Password:</label><br>
-                <input id="pw" name="password" type="text" minlength="6" maxlength="20" required><br>
-            </div>
-            <div id="subbtn">
-                <input type="submit" id="signup" value="signup">
-                <input type="submit" id="login" value="login">
-            </div>
-        </form>
+        <div class="container">
+            <h1>Honeyword</h1>
+            <form id="indexform">
+                <div id="formcontent">
+                    <input id="acc" placeholder="Username" name="account" type="text" minlength="3" maxlength="20" required><br>
+                    <input id="pw" placeholder="Password" name="password" type="text" minlength="6" maxlength="20" required><br>
+                </div>
+                <p id="notice">Invalid username / password</p>
+                <div id="subbtn">
+                    <input type="submit" id="signup" value="signup">
+                    <input type="submit" id="login" value="login">
+                </div>
+            </form>
+        </div>
         <script>
+            document.querySelector('#notice').style.visibility = 'hidden';
             const signupURL = 'account/signup';
             const loginURL = 'account/login';
             const form = document.getElementById('indexform');
@@ -67,14 +99,15 @@
             }
             form.addEventListener('submit', Enter);
             let InvalidNotice = () => {
-                if (document.querySelector('#notice') ===  null) {
-                    const body = document.querySelector('body');
-                    const notice = document.createElement('p');
-                    notice.setAttribute('id', 'notice');
-                    notice.textContent = 'Invalid username / password';
-                    notice.style.cssText = 'color:Tomato; position: relative; top: 0.5em;';
-                    body.appendChild(notice);
-                }
+                // if (document.querySelector('#notice') ===  null) {
+                //     const container = document.querySelector('#container');
+                //     const notice = document.createElement('p');
+                //     notice.setAttribute('id', 'notice');
+                //     notice.textContent = 'Invalid username / password';
+                //     notice.style.cssText = 'color:Tomato; position: relative; top: 0.5em;';
+                //     container.appendChild(notice);
+                // }
+                document.querySelector('#notice').style.visibility = 'visible';
             }
         </script>
     </body>

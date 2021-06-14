@@ -5,45 +5,67 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script src="/javascripts/admin.js" async></script>
         <style>
+            h1 {
+                text-align: center;
+            }
+            .container {
+                overflow-x: scroll;
+            }
             table {
                 border-collapse:collapse;
                 text-align:center;
-                border:2px solid rgb(32, 81, 241);
+                border:1px solid rgb(68, 241, 233);
+                margin: 0 auto;
             }
             th, td {
-                border:2px solid rgb(32, 81, 241);
+                border:1px solid rgb(68, 241, 233);
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            }
+            th {
+                background-color:gold;
+                font-size: 22px;
+            }
+            td {
+                background-color:khaki;
+                font-size: 18px;
             }
         </style>
     </head>
     <body>
-        <h1>User</h1>
-        <table id="usertable">
-            <thead id="userhead">
-                <tr>
-                    <th>username</th>
-                    <th>password</th>
-                </tr>
-            </thead>
-            <tbody id="userbody"></tbody>
-        </table>
-        <h1>Shadow</h1>
-        <table id="shadowtable">
-            <thead id="shadowhead">
-                <tr>
-                    <th>username</th>
-                </tr>
-            </thead>
-            <tbody id="shadowbody"></tbody>
-        </table>
-        <h1>HoneyChecker</h1>
-        <table id="honeycheckertable">
-            <thead>
-                <tr>
-                    <th>username</th>
-                    <th>position</th>
-                </tr>
-            </thead>
-            <tbody id="honeycheckerbody"></tbody>
-        </table>
+        <div class="container">
+            <h1>User</h1>
+                <table id="usertable">
+                    <thead id="userhead">
+                        <tr>
+                            <th>username</th>
+                            <th>password</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userbody"></tbody>
+                </table>
+        </div>
+        <div class="container">
+            <h1>Shadow</h1>
+            <table id="shadowtable">
+                <thead id="shadowhead">
+                    <tr>
+                        <th>username</th>
+                    </tr>
+                </thead>
+                <tbody id="shadowbody"></tbody>
+            </table>
+        </div>
+        <div class="container">
+            <h1>HoneyChecker</h1>
+            <table id="honeycheckertable">
+                <thead>
+                    <tr>
+                        <th>username</th>
+                        <th>position</th>
+                    </tr>
+                </thead>
+                <tbody id="honeycheckerbody"></tbody>
+            </table>
+        </div>
     </body>
 </html>
